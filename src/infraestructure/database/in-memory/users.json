@@ -1,0 +1,26 @@
+[
+    {
+        "id":1,
+        "name":"John",
+        "age":21,
+        "role":"user"
+    },
+    {
+        "id":2,
+        "name":"Mary",
+        "age":31,
+        "role":"manager"
+    },
+    {
+        "id":3,
+        "name":"Willian",
+        "age":27,
+        "role":"user"
+    },
+    {
+        "id":4,
+        "name":"Susan",
+        "age":18,
+        "role":"user"
+    }
+]

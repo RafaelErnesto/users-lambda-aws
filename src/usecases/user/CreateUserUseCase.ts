@@ -1,5 +1,6 @@
 import { Service } from 'typedi';
 import { User } from '../../entities/User';
+import { UserRepositoryInterface } from '../ports/UserRepositoryInterface';
 import { UseCase } from '../UseCase';
 
 export type CreateUserUseCaseInput = {
@@ -8,12 +9,32 @@ export type CreateUserUseCaseInput = {
     age: number;
 }
 
-export type CreateUserUseCaseOutput = Promise<User>
+export type CreateUserUseCaseOutput = Promise<{
+    value: User,
+    result: 'success'
+} | {
+    value: any,
+    result: 'failed'
+}>
 
 @Service()
 export class CreateUserUseCase implements UseCase<CreateUserUseCaseInput, CreateUserUseCaseOutput> {
-    execute(input: CreateUserUseCaseInput): Promise<CreateUserUseCaseOutput> {
-        throw new Error('Method not implemented.');
+    constructor(private userRepository: UserRepositoryInterface){}
+
+    async execute(input: CreateUserUseCaseInput): Promise<CreateUserUseCaseOutput> {
+        try {
+            const user = new User(input);
+            const createdUser = await this.userRepository.create(user);
+            return {
+                value: createdUser,
+                result: 'success'
+            };
+        } catch (error) {
+            return {
+                value: JSON.stringify(error),
+                result: 'failed'
+            }; 
+        }
     }
     
 }
