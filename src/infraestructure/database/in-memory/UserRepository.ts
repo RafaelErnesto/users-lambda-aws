@@ -31,7 +31,13 @@ export class UserRepository implements UserRepositoryInterface {
     }
 
     delete(id: number): Promise<void> {
-        throw new Error("Method not implemented.");
+        const userFound =  this.users.filter(user => user.id === id);
+        if(!userFound) {
+            throw new Error('User not found');
+        }
+
+        this.users = this.users.filter(user => user.id !== id);
+        return;
     }
 
 }
