@@ -40,4 +40,14 @@ describe('Test user entity', () => {
             })
         }).toThrow();
     })
+
+    it('Ensure user entity returns object when all data is correct', () => {
+        const user = new User({
+            name: 'John',
+            role: 'manager',
+            age: 25
+        });
+
+        expect(user).toBeInstanceOf(User);
+    })
 })
