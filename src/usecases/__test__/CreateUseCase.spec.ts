@@ -30,4 +30,15 @@ describe('CreateUseCase tests', () => {
 
         expect(result.result).toBe('failed');
     })
+
+    it('Ensure CreateUserUseCase throws when user role is wrong', async () => {
+        const sut = getSut();
+        const result = await sut.execute({
+            name: 'John',
+            role: 'test',
+            age: 34
+        });
+
+        expect(result.result).toBe('failed');
+    })
 })
