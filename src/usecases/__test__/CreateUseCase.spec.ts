@@ -1,7 +1,6 @@
 import { CreateUserUseCase } from '../user/CreateUserUseCase';
 import { UserRepository } from '../../infraestructure/database/in-memory/UserRepository';
 import { User } from '../../entities/User';
-import { exec } from 'child_process';
 
 describe('CreateUseCase tests', () => {
     const getSut = () => {

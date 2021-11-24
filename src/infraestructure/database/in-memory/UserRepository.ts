@@ -9,7 +9,7 @@ export class UserRepository implements UserRepositoryInterface {
         this.users = usersData
     }
 
-    create(data: User): Promise<User> {
+    async create(data: User): Promise<User> {
         data = new User({
             id: this.users.length + 1,
             name: data.name,
@@ -21,8 +21,9 @@ export class UserRepository implements UserRepositoryInterface {
         return new Promise((resolve) => resolve(data));
     }
 
-    findById(id: number): Promise<User> {
-        throw new Error("Method not implemented.");
+    async findById(id: number): Promise<User> {
+        const userFound =  this.users.filter(user => user.id === id);
+        return userFound[0] ? new User(userFound[0]) : null;
     }
 
     udpate(data: User): Promise<User> {
