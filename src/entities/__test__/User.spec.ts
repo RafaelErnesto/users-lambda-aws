@@ -20,4 +20,14 @@ describe('Test user entity', () => {
             })
         }).toThrow();
     })
+
+    it('Ensure user entity throws when name is an empty string', () => {
+        expect(() => {
+            new User({
+                name: '',
+                role: 'manager',
+                age: 25
+            })
+        }).toThrow();
+    })
 })

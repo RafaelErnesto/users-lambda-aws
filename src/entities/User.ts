@@ -17,6 +17,10 @@ export class User {
     }
 
     public set name(name: string) {
+        if(name.length === 0) {
+            throw new Error('Name cannot be empty');
+            
+        }
         this._name = name;
     }
 
