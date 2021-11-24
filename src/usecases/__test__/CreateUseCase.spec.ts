@@ -41,4 +41,15 @@ describe('CreateUseCase tests', () => {
 
         expect(result.result).toBe('failed');
     })
+
+    it('Ensure CreateUserUseCase throws when user age is wrong', async () => {
+        const sut = getSut();
+        const result = await sut.execute({
+            name: 'John',
+            role: 'manager',
+            age: -34
+        });
+
+        expect(result.result).toBe('failed');
+    })
 })
