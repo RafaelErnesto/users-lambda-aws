@@ -32,7 +32,7 @@ export class UserRepository implements UserRepositoryInterface {
 
     delete(id: number): Promise<void> {
         const userFound =  this.users.filter(user => user.id === id);
-        if(!userFound) {
+        if(userFound.length === 0) {
             throw new Error('User not found');
         }
 
