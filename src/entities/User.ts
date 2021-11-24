@@ -18,8 +18,10 @@ export class User {
 
     public set name(name: string) {
         if(name.length === 0) {
-            throw new Error('Name cannot be empty');
-            
+            throw new Error('Name cannot be empty');    
+        }
+        if(!(/^[a-zA-Z\s]+$/.test(name))) {
+            throw new Error('Numbers are not allowed on name');
         }
         this._name = name;
     }

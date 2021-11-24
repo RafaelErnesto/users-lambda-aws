@@ -30,4 +30,14 @@ describe('Test user entity', () => {
             })
         }).toThrow();
     })
+
+    it('Ensure user entity throws when name has numbers', () => {
+        expect(() => {
+            new User({
+                name: 'John1',
+                role: 'manager',
+                age: 25
+            })
+        }).toThrow();
+    })
 })
