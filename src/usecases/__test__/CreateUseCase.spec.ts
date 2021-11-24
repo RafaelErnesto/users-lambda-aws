@@ -10,13 +10,24 @@ describe('CreateUseCase tests', () => {
 
     it('Ensure CreateUserUseCase returns User entity when success', async () => {
         const sut = getSut();
-        const result = await sut.execute(new User({
+        const result = await sut.execute({
             name: 'John',
             role: 'manager',
             age: 34
-        }));
+        });
 
         expect(result.value).toBeInstanceOf(User);
         expect(result.value.id).not.toBeUndefined();
+    })
+
+    it('Ensure CreateUserUseCase throws when user name is wrong', async () => {
+        const sut = getSut();
+        const result = await sut.execute({
+            name: 'John23',
+            role: 'manager',
+            age: 34
+        });
+
+        expect(result.result).toBe('failed');
     })
 })
