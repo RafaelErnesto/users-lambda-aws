@@ -14,4 +14,10 @@ describe('GetUseCase tests', () => {
         expect(result.value?.id).toBe(1);
     })
 
+    it('Ensure GetUserUseCase returns error when user was not found', async () => {
+        const sut = getSut();
+        const result = await sut.execute({id: 0});
+        expect(result.value).toBe('User not found');
+    })
+
 })
