@@ -10,4 +10,14 @@ describe('Test user entity', () => {
             })
         }).toThrow();
     })
+
+    it('Ensure user entity throws when role is different than manager or user', () => {
+        expect(() => {
+            new User({
+                name: 'John',
+                role: 'test',
+                age: 25
+            })
+        }).toThrow();
+    })
 })

@@ -25,6 +25,10 @@ export class User {
     }
 
     public set role(role: string) {
+        const roles = ['manager', 'user'];
+        if(!roles.includes(role)) {
+            throw new Error('Role not allowed');
+        }
         this._role = role;
     }
 
