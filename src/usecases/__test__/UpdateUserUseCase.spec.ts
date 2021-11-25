@@ -24,4 +24,16 @@ describe('UpdateUseCase tests', () => {
             age: 34
         });
     })
+
+    it('Ensure UpdateUserUseCase returns error when user was not found', async () => {
+        const sut = getSut();
+        const result = await sut.execute({
+            id: 0,
+            name: 'John updated',
+            role: 'user',
+            age: 34
+        });
+
+        expect(result.result).toBe('failed');
+    })
 })

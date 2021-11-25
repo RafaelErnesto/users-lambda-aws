@@ -28,6 +28,9 @@ export class UserRepository implements UserRepositoryInterface {
 
     async update(data: User): Promise<User> {
         let userFound =  this.users.filter((user) => user.id === data.id)[0];
+        if(!userFound) {
+            throw new Error('User not found');
+        }
         //remove obsolete user
         this.users = this.users.filter(user => user.id !== data.id);
         userFound.name = data?.name;
