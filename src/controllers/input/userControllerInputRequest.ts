@@ -4,7 +4,13 @@ import { Request, Response, NextFunction } from 'express';
 export const validateCreateUser = async (req: Request<any, any, any, any, any>, res: Response, next: NextFunction) => {
     const validationChain = [
         body('name').isString(),
-        body('age').isNumeric(),
+        body('age').isNumeric().custom(value => {
+            if(value < 0 || value > 130) {
+                throw new Error('age cannot be negative or bigger than 130');
+            }
+
+            return true;
+        }),
         body('role').isString().custom(value => {
             if(value === 'manager' || value === 'user') {
                 return true;

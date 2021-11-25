@@ -24,7 +24,7 @@ export class UserController implements Controller {
         });
 
         if(output.result === 'success') {
-            res.status(204).json(output.value)
+            res.status(201).json(output.value)
         }else {
             res.status(500).json(output.value);
         }
