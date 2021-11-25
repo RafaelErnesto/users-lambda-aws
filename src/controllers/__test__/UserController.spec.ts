@@ -71,7 +71,18 @@ describe('UseController test', () => {
     it('Ensure get user api returns user when it exists', async () => {
         await request(app)
              .get('/api/user/0')
-             .expect(404)
-             
- })
+             .expect(404)         
+    })
+
+    it('Ensure delete user api returns 204 when successfuly deleted', async () => {
+        await request(app)
+             .delete('/api/user/2')
+             .expect(204)        
+    })
+
+    it('Ensure delete user api returns 404 when user was not found', async () => {
+        await request(app)
+             .delete('/api/user/0')
+             .expect(404)        
+    })
 })

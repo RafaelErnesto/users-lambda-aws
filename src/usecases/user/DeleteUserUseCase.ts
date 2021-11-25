@@ -21,8 +21,15 @@ export class DeleteUserUseCase implements UseCase<DeleteUserUseCaseInput, Delete
 
     async execute(input: DeleteUserUseCaseInput): Promise<DeleteUserUseCaseOutput> {
         try {
-           
-             await this.userRepository.delete(input.id);
+            const user = await this.userRepository.findById(input.id);
+            if(!user) {
+                return {
+                    value: 'User not found',
+                    result: 'failed'
+                };
+            }
+
+            await this.userRepository.delete(input.id);
             return {
                 value: 'User deleted',
                 result: 'success'
