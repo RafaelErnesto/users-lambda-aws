@@ -1,6 +1,6 @@
 export class User {
 
-    private id?: number;
+    private _id?: number;
     private _name: string;
     private _role: string;
     private _age: number;
@@ -9,11 +9,15 @@ export class User {
         this.name = data.name;
         this.role = data.role;
         this.age = data.age;
-        this.id = data?.id;
+        this._id = data?.id;
     }
 
     public get name(): string {
         return this._name;
+    }
+
+    public get id(): number {
+        return this._id;
     }
 
     public set name(name: string) {

@@ -26,11 +26,19 @@ export class UserRepository implements UserRepositoryInterface {
         return userFound[0] ? new User(userFound[0]) : null;
     }
 
-    udpate(data: User): Promise<User> {
-        throw new Error("Method not implemented.");
+    async update(data: User): Promise<User> {
+        let userFound =  this.users.filter((user) => user.id === data.id)[0];
+        //remove obsolete user
+        this.users = this.users.filter(user => user.id !== data.id);
+        userFound.name = data?.name;
+        userFound.role = data?.role;
+        userFound.age = data?.age;
+        //add updated user to users again
+        this.users.push(new User(userFound));
+        return new User(userFound);
     }
 
-    delete(id: number): Promise<void> {
+    async delete(id: number): Promise<void> {
         const userFound =  this.users.filter(user => user.id === id);
         if(userFound.length === 0) {
             throw new Error('User not found');
