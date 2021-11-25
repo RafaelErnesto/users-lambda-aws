@@ -24,6 +24,13 @@ export class UpdateUserUseCase implements UseCase<UpdateUserUseCaseInput, Update
 
     async execute(input: UpdateUserUseCaseInput): Promise<UpdateUserUseCaseOutput> {
         try {
+            const userFound = await this.userRepository.findById(input.id);
+            if(!userFound) {
+                return {
+                    value: 'User not found',
+                    result: 'failed'
+                };
+            }
             const user = new User(input);
             const updatedUser = await this.userRepository.update(user);
             return {

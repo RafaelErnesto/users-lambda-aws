@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { Service } from "typedi";
 import { CreateUserUseCase } from "../usecases/user/CreateUserUseCase";
-import { validateCreateUser, validateDeleteUser, validateGetUser } from './input/userControllerInputRequest';
+import { validateCreateUser, validateDeleteUser, validateGetUser, validateUpdateUser } from './input/userControllerInputRequest';
 
 import Controller from "./Controller";
 import { GetUserUseCase } from '../usecases/user/GetUserUseCase';
@@ -21,6 +21,7 @@ export class UserController implements Controller {
         const router = Router();
         router.post('/user', validateCreateUser, this.create);
         router.get('/user/:id', validateGetUser, this.get);
+        router.put('/user/:id', validateUpdateUser, this.update);
         router.delete('/user/:id', validateDeleteUser, this.delete);
 
         return router;
@@ -36,6 +37,28 @@ export class UserController implements Controller {
         if(output.result === 'success') {
             res.status(201).json(output.value)
         }else {
+            res.status(500).json(output.value);
+        }
+    }
+
+    update = async (req: Request, res: Response) => {
+        const output = await this.updateUserUseCase.execute({
+            id: Number(req.params.id),
+            name: req.body.name,
+            role: req.body.role,
+            age: req.body.age
+        });
+
+        if(output.result === 'success') {
+            res.status(200).json({
+                name: output.value.name,
+                age: output.value.age,
+                role: output.value.role,
+                id: output.value.id
+            })
+        }else if (output.value === 'User not found') {
+            res.status(404).json(output.value);
+        } else {
             res.status(500).json(output.value);
         }
     }

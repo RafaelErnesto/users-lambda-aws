@@ -85,4 +85,65 @@ describe('UseController test', () => {
              .delete('/api/user/0')
              .expect(404)        
     })
+
+    it('Ensure update user api returns 200 when user was updated', (done) => {
+             request(app)
+             .put('/api/user/1')
+             .send({
+                 name: 'User updated',
+                 age: 23,
+                 role: 'user'
+             })
+             .expect(200)  
+             .then(response => {
+                expect(response.body.id).toBe(1);
+                expect(response.body.name).toBe('User updated');
+                done();
+             })
+             .catch(err => done(err)) 
+    })
+
+    it('Ensure update user api returns 404 when user was not found', async () => {
+        await request(app)
+        .put('/api/user/0')
+        .send({
+            name: 'User updated',
+            age: 23,
+            role: 'user'
+        })
+        .expect(404)
+    })
+
+    it('Ensure update user api returns 400 when name is invalid', async () => {
+        await request(app)
+        .put('/api/user/1')
+        .send({
+            name: 3,
+            age: 23,
+            role: 'user'
+        })
+        .expect(400)
+    })
+
+    it('Ensure update user api returns 400 when age is invalid', async () => {
+        await request(app)
+        .put('/api/user/1')
+        .send({
+            name: 'John',
+            age: -23,
+            role: 'user'
+        })
+        .expect(400)
+    })
+
+    it('Ensure update user api returns 400 when role is invalid', async () => {
+        await request(app)
+        .put('/api/user/1')
+        .send({
+            name: 'John',
+            age: 23,
+            role: 'test'
+        })
+        .expect(400)
+    })
 })
