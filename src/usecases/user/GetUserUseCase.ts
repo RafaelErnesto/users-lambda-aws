@@ -28,6 +28,7 @@ export class GetUserUseCase implements UseCase<GetUserUseCaseInput, GetUserUseCa
                     result: 'success'
                 };
             }
+
             return {
                 value: 'User not found',
                 result: 'failed'

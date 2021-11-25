@@ -1,4 +1,5 @@
 import request from 'supertest';
+import { User } from '../../entities/User';
 import app from '../../infraestructure/app';
 
 describe('UseController test', () => {
@@ -55,4 +56,22 @@ describe('UseController test', () => {
                 })
                 .expect(400)
     })
+
+    it('Ensure get user api returns user when it exists', (done) => {
+           request(app)
+                .get('/api/user/1')
+                .expect(200)
+                .then(response => {
+                    expect(response.body.id).toBe(1);
+                    done();
+                })
+                .catch(err => done(err))
+    })
+
+    it('Ensure get user api returns user when it exists', async () => {
+        await request(app)
+             .get('/api/user/0')
+             .expect(404)
+             
+ })
 })
