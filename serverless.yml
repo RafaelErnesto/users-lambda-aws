@@ -1,0 +1,27 @@
+service: users-app
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: sa-east-1
+  memorySize: 128
+package:
+  exclude:
+    - "**/*.ts"
+    - "__test__/**"
+    - "coverage/**"
+    - "scripts/**"
+    - ".vscode/**"
+    - "src/**"
+functions:
+  app:
+    handler: lambda.app
+    events: 
+      - http: 
+          path: /
+          method: ANY
+          cors: true
+      - http: 
+          path: /{proxy+}
+          method: ANY
+          cors: true

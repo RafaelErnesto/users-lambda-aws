@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "start": "tsc && nodemon build/infraestructure/index.js",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -22,10 +23,13 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "@vendia/serverless-express": "^4.5.2",
+    "aws-serverless-express": "^3.4.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
+    "serverless-http": "^2.7.0",
     "typedi": "^0.10.0",
     "typeorm": "^0.2.41"
   }
