@@ -31,7 +31,7 @@ export class CreateUserUseCase implements UseCase<CreateUserUseCaseInput, Create
             };
         } catch (error) {
             return {
-                value: JSON.stringify(error),
+                value: error,
                 result: 'failed'
             }; 
         }

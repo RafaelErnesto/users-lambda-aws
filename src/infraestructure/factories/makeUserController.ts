@@ -3,7 +3,7 @@ import { CreateUserUseCase } from "../../usecases/user/CreateUserUseCase";
 import { DeleteUserUseCase } from "../../usecases/user/DeleteUserUseCase";
 import { GetUserUseCase } from "../../usecases/user/GetUserUseCase";
 import { UpdateUserUseCase } from "../../usecases/user/UpdateUserUseCase";
-import { UserRepository } from "../database/in-memory/UserRepository"
+import { UserRepository } from "../database/postgres/repositories/UserRepository"
 
 export const makeUserController = (): UserController => {
     const userRepository = new UserRepository();

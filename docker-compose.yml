@@ -15,30 +15,6 @@ services:
             - volume_container_users_api:/data/db
         networks: 
             - users-api-network
-    node:
-        container_name: users-api
-        build:
-            context: .
-            target: development
-            dockerfile: ./Dockerfile
-        depends_on: 
-            - postgres
-        command: npm run start
-        ports:
-            - 8000:8000
-        networks: 
-            - users-api-network
-        volumes:
-            - .:/usr/src/app
-            - /usr/app/node_modules
-        restart: unless-stopped
-        environment:
-            DB_USER: postgres
-            DB_PASSWORD: postgres
-            DB_NAME: api
-            DB_HOST: postgres
-            DB_PORT: 5431
-
 networks: 
     users-api-network:
         

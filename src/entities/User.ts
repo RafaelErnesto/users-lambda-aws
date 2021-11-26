@@ -16,6 +16,10 @@ export class User {
         return this._name;
     }
 
+    public set id(id: number)  {
+        this._id = id;
+    }
+
     public get id(): number {
         return this._id;
     }
