@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node build/infraestructure/index.js",
-    "test": "jest --coverage",
+    "start": "tsc && nodemon build/infraestructure/index.js",
+    "test": "jest",
     "test:watch": "jest --watch"
   },
   "keywords": [],
