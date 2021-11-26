@@ -57,26 +57,36 @@ describe('UseController test', () => {
                 .expect(400)
     })
 
-    it('Ensure get user api returns user when it exists', (done) => {
-           request(app)
-                .get('/api/user/1')
+    it('Ensure get user api returns user when it exists', async () => {
+            
+        const user = await request(app)
+            .post('/api/user')
+            .send({
+                name: 'John',
+                age: 23,
+                role: 'manager'
+            })
+           await request(app)
+                .get(`/api/user/${user.body._id}`)
                 .expect(200)
-                .then(response => {
-                    expect(response.body.id).toBe(1);
-                    done();
-                })
-                .catch(err => done(err))
     })
 
-    it('Ensure get user api returns user when it exists', async () => {
+    it('Ensure get user api returns 404  when does not exist', async () => {
         await request(app)
              .get('/api/user/0')
              .expect(404)         
     })
 
     it('Ensure delete user api returns 204 when successfuly deleted', async () => {
+        const user = await request(app)
+        .post('/api/user')
+        .send({
+            name: 'John',
+            age: 23,
+            role: 'manager'
+        })
         await request(app)
-             .delete('/api/user/2')
+             .delete(`/api/user/${user.body._id}`)
              .expect(204)        
     })
 
@@ -86,21 +96,23 @@ describe('UseController test', () => {
              .expect(404)        
     })
 
-    it('Ensure update user api returns 200 when user was updated', (done) => {
-             request(app)
-             .put('/api/user/1')
+    it('Ensure update user api returns 200 when user was updated', async () => {
+            const user = await request(app)
+                .post('/api/user')
+                .send({
+                    name: 'John',
+                    age: 23,
+                    role: 'manager'
+                })
+
+             await request(app)
+             .put(`/api/user/${user.body._id}`)
              .send({
                  name: 'User updated',
                  age: 23,
                  role: 'user'
              })
              .expect(200)  
-             .then(response => {
-                expect(response.body.id).toBe(1);
-                expect(response.body.name).toBe('User updated');
-                done();
-             })
-             .catch(err => done(err)) 
     })
 
     it('Ensure update user api returns 404 when user was not found', async () => {
