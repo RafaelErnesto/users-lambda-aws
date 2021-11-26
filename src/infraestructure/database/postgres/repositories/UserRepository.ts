@@ -3,11 +3,6 @@ import  { Users } from "../entity/Users";
 import { UserRepositoryInterface } from "../../../../usecases/ports/UserRepositoryInterface";
 import { getDatabaseConnection } from "../../../../main/db/getDatabaseConnection";
 export class UserRepository implements UserRepositoryInterface {
-    private users: any;
-    
-    constructor() {
-        this.users = {}
-    }
 
     async create(data: User): Promise<User> {
         let connection;
@@ -15,7 +10,8 @@ export class UserRepository implements UserRepositoryInterface {
             connection = await getDatabaseConnection();
             const repository = connection.getRepository(Users);
             return await repository.save(data);
-        }finally {
+        }catch(error){console.log(error)}
+        finally {
             if(connection) {
                 await connection.close()
             }
