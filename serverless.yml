@@ -15,7 +15,8 @@ package:
     - "src/**"
 functions:
   app:
-    handler: lambda.app
+    handler: lambda.handler
+    timeout: 20
     events: 
       - http: 
           path: /
