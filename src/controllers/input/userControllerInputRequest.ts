@@ -2,6 +2,7 @@ import{ body, param, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 
 export const validateCreateUser = async (req: Request<any, any, any, any, any>, res: Response, next: NextFunction) => {
+    const roles = ['manager', 'janitor', 'assistant', 'secretary']
     const validationChain = [
         body('name').isString(),
         body('age').isNumeric().custom(value => {
@@ -12,11 +13,11 @@ export const validateCreateUser = async (req: Request<any, any, any, any, any>, 
             return true;
         }),
         body('role').isString().custom(value => {
-            if(value === 'manager' || value === 'user') {
+            if(roles.includes(value)) {
                 return true;
             }
 
-            throw new Error('role must be managar or user');
+            throw new Error('Allowed roles are: '+ roles.toString());
         })
     ];
     await Promise.all(validationChain.map(validation => validation.run(req)));
@@ -29,6 +30,7 @@ export const validateCreateUser = async (req: Request<any, any, any, any, any>, 
 }
 
 export const validateUpdateUser = async (req: Request<any, any, any, any, any>, res: Response, next: NextFunction) => {
+    const roles = ['manager', 'janitor', 'assistant', 'secretary']
     const validationChain = [
         param('id').isNumeric(),
         body('name').isString(),
@@ -40,11 +42,11 @@ export const validateUpdateUser = async (req: Request<any, any, any, any, any>, 
             return true;
         }),
         body('role').isString().custom(value => {
-            if(value === 'manager' || value === 'user') {
+            if(roles.includes(value)) {
                 return true;
             }
 
-            throw new Error('role must be managar or user');
+            throw new Error('Allowed roles are: '+ roles.toString());
         })
     ];
     await Promise.all(validationChain.map(validation => validation.run(req)));

@@ -28,67 +28,90 @@ export class UserController implements Controller {
     }
 
     create = async (req: Request, res: Response) => {
-        const output = await this.createUserUseCase.execute({
-            name: req.body.name,
-            role: req.body.role,
-            age: req.body.age
-        });
+        try {
+            const output = await this.createUserUseCase.execute({
+                name: req.body.name,
+                role: req.body.role,
+                age: req.body.age
+            });
+    
+            if(output.result === 'success') {
+                return res.status(201).json(output.value)
+            }
 
-        if(output.result === 'success') {
-            res.status(201).json(output.value)
-        }else {
-            res.status(500).json(output.value);
+            return res.status(500).json(output.value);
+        } catch (error) {
+            res.status(500).json(error);
         }
     }
 
     update = async (req: Request, res: Response) => {
-        const output = await this.updateUserUseCase.execute({
-            id: Number(req.params.id),
-            name: req.body.name,
-            role: req.body.role,
-            age: req.body.age
-        });
 
-        if(output.result === 'success') {
-            res.status(200).json({
-                name: output.value.name,
-                age: output.value.age,
-                role: output.value.role,
-                id: output.value.id
-            })
-        }else if (output.value === 'User not found') {
-            res.status(404).json(output.value);
-        } else {
-            res.status(500).json(output.value);
+        try {
+            const output = await this.updateUserUseCase.execute({
+                id: Number(req.params.id),
+                name: req.body.name,
+                role: req.body.role,
+                age: req.body.age
+            });
+    
+            if(output.result === 'success') {
+                return res.status(200).json({
+                    name: output.value.name,
+                    age: output.value.age,
+                    role: output.value.role,
+                    id: output.value.id
+                })
+            }
+    
+            if (output.result === 'validation_error') {
+                return res.status(400).json(output.value);
+            } 
+    
+            return res.status(500).json(output.value);
+        } catch(error) {
+            return res.status(500).json(error);
         }
     }
 
     get = async (req: Request, res: Response) => {
-        const output = await this.getUserUseCase.execute({id: Number(req.params.id)});
+        try {
+            const output = await this.getUserUseCase.execute({id: Number(req.params.id)});
 
-        if(output.result === 'success') {
-            res.status(200).json({
-                name: output.value.name,
-                age: output.value.age,
-                role: output.value.role,
-                id: output.value.id
-            })
-        }else if (output.value === 'User not found') {
-            res.status(404).json(output.value);
-        } else {
-            res.status(500).json(output.value);
+            if(output.result === 'success') {
+                return res.status(200).json({
+                    name: output.value.name,
+                    age: output.value.age,
+                    role: output.value.role,
+                    id: output.value.id
+                })
+            }
+            
+            if (output.result === 'validation_error') {
+                return res.status(400).json(output.value);
+            } 
+
+            return res.status(500).json(output.value);
+        } catch(error) {
+            res.status(500).json(error);
         }
     }
 
     delete = async (req: Request, res: Response) => {
-        const output = await this.deleteUserUseCase.execute({id: Number(req.params.id)});
+        try {
+            const output = await this.deleteUserUseCase.execute({id: Number(req.params.id)});
 
-        if(output.result === 'success') {
-            res.status(204).json({})
-        }else if (output.value === 'User not found') {
-            res.status(404).json(output.value);
-        } else {
-            res.status(500).json(output.value);
+            if(output.result === 'success') {
+                return res.status(204).json({})
+            }
+
+            if(output.result === 'validation_error') {
+                return res.status(400).json(output.value);
+            }
+
+            return res.status(500).json(output.value);
+        } catch(error) {
+            return res.status(500).json(error);
         }
     }
 }

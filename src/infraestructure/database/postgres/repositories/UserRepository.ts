@@ -45,9 +45,8 @@ export class UserRepository implements UserRepositoryInterface {
                 throw new Error('User not found');
             }
             const userToUpdate = resultQuery[0];
-            userToUpdate.name = data.name;
-            userToUpdate.role = data.role;
-            userToUpdate.age = data.age;
+
+            Object.assign(userToUpdate, data)
             return await repository.save(userToUpdate);
         }finally {
             if(connection) {

@@ -1,19 +1,12 @@
 import { Service } from 'typedi';
-import { User } from '../../entities/User';
 import { UserRepositoryInterface } from '../ports/UserRepositoryInterface';
-import { UseCase } from '../UseCase';
+import { UseCase, UseCaseOutputError, UseCaseOutputSuccess, UseCaseOutputValidationError } from '../UseCase';
 
 export type DeleteUserUseCaseInput = {
     id: number;
 }
 
-export type DeleteUserUseCaseOutput = Promise< {
-    value: any,
-    result: 'success'
-} | {
-    value: any,
-    result: 'failed'
-}>
+export type DeleteUserUseCaseOutput = Promise<UseCaseOutputSuccess<any> | UseCaseOutputError<any> | UseCaseOutputValidationError<any>>
 
 @Service()
 export class DeleteUserUseCase implements UseCase<DeleteUserUseCaseInput, DeleteUserUseCaseOutput> {
@@ -22,23 +15,17 @@ export class DeleteUserUseCase implements UseCase<DeleteUserUseCaseInput, Delete
     async execute(input: DeleteUserUseCaseInput): Promise<DeleteUserUseCaseOutput> {
         try {
             const user = await this.userRepository.findById(input.id);
+
             if(!user) {
-                return {
-                    value: 'User not found',
-                    result: 'failed'
-                };
+                return new UseCaseOutputValidationError('User not found');
             }
 
             await this.userRepository.delete(input.id);
-            return {
-                value: 'User deleted',
-                result: 'success'
-            };
+            return new UseCaseOutputSuccess('User deleted');
         } catch (error) {
-            return {
-                value: JSON.stringify(error),
-                result: 'failed'
-            }; 
+            console.log('ERROR: DeleteUserUseCase')
+            console.log(error)
+            return new UseCaseOutputError('Error removing user');
         }
     }
     

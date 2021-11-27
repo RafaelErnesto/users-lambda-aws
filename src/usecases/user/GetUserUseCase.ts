@@ -1,19 +1,13 @@
 import { Service } from 'typedi';
 import { User } from '../../entities/User';
 import { UserRepositoryInterface } from '../ports/UserRepositoryInterface';
-import { UseCase } from '../UseCase';
+import { UseCase, UseCaseOutputError, UseCaseOutputSuccess, UseCaseOutputValidationError } from '../UseCase';
 
 export type GetUserUseCaseInput = {
     id: number;
 }
 
-export type GetUserUseCaseOutput = Promise<{
-    value: User,
-    result: 'success'
-} | {
-    value: any,
-    result: 'failed'
-}>
+export type GetUserUseCaseOutput = Promise<UseCaseOutputSuccess<User> | UseCaseOutputError<any> | UseCaseOutputValidationError<any>>
 
 @Service()
 export class GetUserUseCase implements UseCase<GetUserUseCaseInput, GetUserUseCaseOutput> {
@@ -23,21 +17,13 @@ export class GetUserUseCase implements UseCase<GetUserUseCaseInput, GetUserUseCa
         try {
             const userFound = await this.userRepository.findById(input.id);
             if(userFound) {
-                return {
-                    value: userFound,
-                    result: 'success'
-                };
+                return new UseCaseOutputSuccess(userFound);
             }
-
-            return {
-                value: 'User not found',
-                result: 'failed'
-            };
+            return new UseCaseOutputValidationError('User not found');
         } catch (error) {
-            return {
-                value: JSON.stringify(error),
-                result: 'failed'
-            }; 
+            console.log('ERROR: GetUserUseCase')
+            console.log(error)
+            return new UseCaseOutputError('Error to get user');
         }
     }
     

@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
 import { User } from '../../entities/User';
 import { UserRepositoryInterface } from '../ports/UserRepositoryInterface';
-import { UseCase } from '../UseCase';
+import { UseCase, UseCaseOutputError, UseCaseOutputSuccess, UseCaseOutputValidationError } from '../UseCase';
 
 export type UpdateUserUseCaseInput = {
     id: number;
@@ -10,13 +10,7 @@ export type UpdateUserUseCaseInput = {
     age: number;
 }
 
-export type UpdateUserUseCaseOutput = Promise<{
-    value: User,
-    result: 'success'
-} | {
-    value: any,
-    result: 'failed'
-}>
+export type UpdateUserUseCaseOutput = Promise<UseCaseOutputSuccess<User> | UseCaseOutputValidationError<any> | UseCaseOutputError<any>>
 
 @Service()
 export class UpdateUserUseCase implements UseCase<UpdateUserUseCaseInput, UpdateUserUseCaseOutput> {
@@ -26,22 +20,15 @@ export class UpdateUserUseCase implements UseCase<UpdateUserUseCaseInput, Update
         try {
             const userFound = await this.userRepository.findById(input.id);
             if(!userFound) {
-                return {
-                    value: 'User not found',
-                    result: 'failed'
-                };
+                return new UseCaseOutputValidationError('User not found');
             }
             const user = new User(input);
             const updatedUser = await this.userRepository.update(user);
-            return {
-                value: updatedUser,
-                result: 'success'
-            };
+            return new UseCaseOutputSuccess(updatedUser);
         } catch (error) {
-            return {
-                value: JSON.stringify(error),
-                result: 'failed'
-            }; 
+            console.log('ERROR: UpdateUserUseCase')
+            console.log(error)
+            return new UseCaseOutputError('Error updating user');
         }
     }
     

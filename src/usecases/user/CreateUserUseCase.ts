@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
 import { User } from '../../entities/User';
 import { UserRepositoryInterface } from '../ports/UserRepositoryInterface';
-import { UseCase } from '../UseCase';
+import { UseCase, UseCaseOutputError, UseCaseOutputSuccess } from '../UseCase';
 
 export type CreateUserUseCaseInput = {
     name: string;
@@ -9,13 +9,7 @@ export type CreateUserUseCaseInput = {
     age: number;
 }
 
-export type CreateUserUseCaseOutput = Promise<{
-    value: User,
-    result: 'success'
-} | {
-    value: any,
-    result: 'failed'
-}>
+export type CreateUserUseCaseOutput = Promise<UseCaseOutputSuccess<User> | UseCaseOutputError<any>>
 
 @Service()
 export class CreateUserUseCase implements UseCase<CreateUserUseCaseInput, CreateUserUseCaseOutput> {
@@ -25,15 +19,11 @@ export class CreateUserUseCase implements UseCase<CreateUserUseCaseInput, Create
         try {
             const user = new User(input);
             const createdUser = await this.userRepository.create(user);
-            return {
-                value: createdUser,
-                result: 'success'
-            };
+            return new UseCaseOutputSuccess(createdUser);
         } catch (error) {
-            return {
-                value: error,
-                result: 'failed'
-            }; 
+            console.log('ERROR: CreateUserUseCase')
+            console.log(error)
+            return new UseCaseOutputError('Error creating user');
         }
     }
     
