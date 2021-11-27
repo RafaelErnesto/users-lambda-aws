@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "deploy": "tsc & serverless deploy",
-    "start": "tsc && nodemon build/infraestructure/index.js",
+    "start": "tsc && nodemon src/infraestructure/index.ts",
     "test": "jest",
     "test:watch": "jest --watch"
   },

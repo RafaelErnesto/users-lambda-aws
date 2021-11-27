@@ -10,7 +10,7 @@ export const getDatabaseConnection = async () => {
         password: process.env.DB_PASSWORD || 'postgres',
         database: process.env.DB_NAME || 'api',
         entities: [
-            process.env.ENV ? "build/infraestructure/database/postgres/entity/*.js" : "src/infraestructure/database/postgres/entity/*.ts"
+            process.env.ENV === 'prod' ? "build/infraestructure/database/postgres/entity/*.js" : "src/infraestructure/database/postgres/entity/*.ts"
          ],
          migrations: [
             

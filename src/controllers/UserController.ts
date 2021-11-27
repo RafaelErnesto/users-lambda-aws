@@ -7,6 +7,7 @@ import Controller from "./Controller";
 import { GetUserUseCase } from '../usecases/user/GetUserUseCase';
 import { DeleteUserUseCase } from '../usecases/user/DeleteUserUseCase';
 import { UpdateUserUseCase } from '../usecases/user/UpdateUserUseCase';
+import { createUserOutputRequestMapper, getUserOutputRequestMapper, updateUserOutputRequestMapper } from './output/userControllerOutputRequest';
 
 @Service()
 export class UserController implements Controller {
@@ -36,7 +37,7 @@ export class UserController implements Controller {
             });
     
             if(output.result === 'success') {
-                return res.status(201).json(output.value)
+                return res.status(201).json(createUserOutputRequestMapper(output.value))
             }
 
             return res.status(500).json(output.value);
@@ -56,12 +57,7 @@ export class UserController implements Controller {
             });
     
             if(output.result === 'success') {
-                return res.status(200).json({
-                    name: output.value.name,
-                    age: output.value.age,
-                    role: output.value.role,
-                    id: output.value.id
-                })
+                return res.status(200).json(updateUserOutputRequestMapper(output.value))
             }
     
             if (output.result === 'validation_error') {
@@ -79,12 +75,7 @@ export class UserController implements Controller {
             const output = await this.getUserUseCase.execute({id: Number(req.params.id)});
 
             if(output.result === 'success') {
-                return res.status(200).json({
-                    name: output.value.name,
-                    age: output.value.age,
-                    role: output.value.role,
-                    id: output.value.id
-                })
+                return res.status(200).json(getUserOutputRequestMapper(output.value))
             }
             
             if (output.result === 'validation_error') {
