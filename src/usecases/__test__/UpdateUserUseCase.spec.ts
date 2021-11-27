@@ -12,7 +12,7 @@ describe('UpdateUseCase tests', () => {
         const result = await sut.execute({
             id: 1,
             name: 'John updated',
-            role: 'user',
+            role: 'manager',
             age: 34
         });
 
@@ -20,7 +20,7 @@ describe('UpdateUseCase tests', () => {
         expect(result.value).toMatchObject({
             id: 1,
             name: 'John updated',
-            role: 'user',
+            role: 'manager',
             age: 34
         });
     })
@@ -30,10 +30,10 @@ describe('UpdateUseCase tests', () => {
         const result = await sut.execute({
             id: 0,
             name: 'John updated',
-            role: 'user',
+            role: 'manager',
             age: 34
         });
 
-        expect(result.result).toBe('failed');
+        expect(result.result).toBe('validation_error');
     })
 })

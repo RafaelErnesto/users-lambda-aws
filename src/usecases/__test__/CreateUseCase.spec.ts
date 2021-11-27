@@ -27,7 +27,7 @@ describe('CreateUseCase tests', () => {
             age: 34
         });
 
-        expect(result.result).toBe('failed');
+        expect(result.result).toBe('error');
     })
 
     it('Ensure CreateUserUseCase throws when user role is wrong', async () => {
@@ -38,10 +38,10 @@ describe('CreateUseCase tests', () => {
             age: 34
         });
 
-        expect(result.result).toBe('failed');
+        expect(result.result).toBe('error');
     })
 
-    it('Ensure CreateUserUseCase throws when user age is wrong', async () => {
+    it('Ensure CreateUserUseCase returns when user age is wrong', async () => {
         const sut = getSut();
         const result = await sut.execute({
             name: 'John',
@@ -49,6 +49,6 @@ describe('CreateUseCase tests', () => {
             age: -34
         });
 
-        expect(result.result).toBe('failed');
+        expect(result.result).toBe('error');
     })
 })

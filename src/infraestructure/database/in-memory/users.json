@@ -3,7 +3,7 @@
         "id":1,
         "name":"John",
         "age":21,
-        "role":"user"
+        "role":"janitor"
     },
     {
         "id":2,
@@ -15,12 +15,12 @@
         "id":3,
         "name":"Willian",
         "age":27,
-        "role":"user"
+        "role":"secretary"
     },
     {
         "id":4,
         "name":"Susan",
         "age":18,
-        "role":"user"
+        "role":"assistant"
     }
 ]

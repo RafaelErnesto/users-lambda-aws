@@ -39,7 +39,7 @@ export class User {
     }
 
     public set role(role: string) {
-        const roles = ['manager', 'user'];
+        const roles = ['manager', 'janitor', 'assistant', 'secretary'];
         if(!roles.includes(role)) {
             throw new Error('Role not allowed');
         }

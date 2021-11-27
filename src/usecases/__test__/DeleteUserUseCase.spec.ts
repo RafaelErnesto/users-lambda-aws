@@ -1,6 +1,5 @@
 import { DeleteUserUseCase } from '../user/DeleteUserUseCase';
 import { UserRepository } from '../../infraestructure/database/in-memory/UserRepository';
-import { User } from '../../entities/User';
 
 describe('DeleteUseCase tests', () => {
     const getSut = () => {
@@ -9,7 +8,7 @@ describe('DeleteUseCase tests', () => {
 
     it('Ensure DeleteUserUseCase returns success when deletes and existing user', async () => {
         const sut = getSut();
-        const result = await sut.execute({ id: 1 });
+        const result = await sut.execute({ id: 4 });
 
         expect(result.value).toBe('User deleted');
         expect(result.result).toBe('success');
@@ -19,6 +18,6 @@ describe('DeleteUseCase tests', () => {
         const sut = getSut();
         const result = await sut.execute({ id: 0 });
 
-        expect(result.result).toBe('failed');
+        expect(result.result).toBe('validation_error');
     })
 })

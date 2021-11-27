@@ -67,14 +67,14 @@ describe('UseController test', () => {
                 role: 'manager'
             })
            await request(app)
-                .get(`/api/user/${user.body._id}`)
+                .get(`/api/user/${user.body.id}`)
                 .expect(200)
     })
 
     it('Ensure get user api returns 404  when does not exist', async () => {
         await request(app)
              .get('/api/user/0')
-             .expect(404)         
+             .expect(400)         
     })
 
     it('Ensure delete user api returns 204 when successfuly deleted', async () => {
@@ -86,14 +86,14 @@ describe('UseController test', () => {
             role: 'manager'
         })
         await request(app)
-             .delete(`/api/user/${user.body._id}`)
+             .delete(`/api/user/${user.body.id}`)
              .expect(204)        
     })
 
     it('Ensure delete user api returns 404 when user was not found', async () => {
         await request(app)
              .delete('/api/user/0')
-             .expect(404)        
+             .expect(400)        
     })
 
     it('Ensure update user api returns 200 when user was updated', async () => {
@@ -106,11 +106,11 @@ describe('UseController test', () => {
                 })
 
              await request(app)
-             .put(`/api/user/${user.body._id}`)
+             .put(`/api/user/${user.body.id}`)
              .send({
                  name: 'User updated',
                  age: 23,
-                 role: 'user'
+                 role: 'janitor'
              })
              .expect(200)  
     })
@@ -121,9 +121,9 @@ describe('UseController test', () => {
         .send({
             name: 'User updated',
             age: 23,
-            role: 'user'
+            role: 'janitor'
         })
-        .expect(404)
+        .expect(400)
     })
 
     it('Ensure update user api returns 400 when name is invalid', async () => {
@@ -132,7 +132,7 @@ describe('UseController test', () => {
         .send({
             name: 3,
             age: 23,
-            role: 'user'
+            role: 'janitor'
         })
         .expect(400)
     })
@@ -143,7 +143,7 @@ describe('UseController test', () => {
         .send({
             name: 'John',
             age: -23,
-            role: 'user'
+            role: 'janitor'
         })
         .expect(400)
     })
