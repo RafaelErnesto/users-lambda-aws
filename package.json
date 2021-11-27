@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "deploy": "tsc & serverless deploy",
     "start": "tsc && nodemon build/infraestructure/index.js",
     "test": "jest",
     "test:watch": "jest --watch"

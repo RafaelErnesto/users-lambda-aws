@@ -10,7 +10,7 @@ export class UserRepository implements UserRepositoryInterface {
             connection = await getDatabaseConnection();
             const repository = connection.getRepository(Users);
             return await repository.save(data);
-        }catch(error){console.log(error)}
+        }
         finally {
             if(connection) {
                 await connection.close()

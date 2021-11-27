@@ -37,15 +37,13 @@ functions:
           cors: true
     vpc:
       securityGroupIds:
-        - sg-d5dbbba3
+        - id
       subnetIds:
-        - subnet-f45d2dbd
-        - subnet-65e1983e
-        - subnet-db4e3cbd
+        - id
     environment:
-      DB_HOST: api.cefm0ozrdlns.sa-east-1.rds.amazonaws.com
-      DB_NAME: api
-      DB_PASSWORD: s7pctk3c
-      DB_USERNAME: rootDev
+      DB_HOST: host
+      DB_NAME: name
+      DB_PASSWORD: pwd
+      DB_USERNAME: user
       DB_PORT: 5432
       ENV: prod
