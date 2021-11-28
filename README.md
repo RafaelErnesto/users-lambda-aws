@@ -1,8 +1,6 @@
 # users-lambda-aws
 This API provides a CRUD to create users on a postgres database.
 
-
-
 ## To run on localhost
 Run the docker-compose up -d to create a postgres database.
 Run npm run start to build the project and start the server on port 8080.
