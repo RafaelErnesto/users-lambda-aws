@@ -4,7 +4,17 @@ import { Request, Response, NextFunction } from 'express';
 export const validateCreateUser = async (req: Request<any, any, any, any, any>, res: Response, next: NextFunction) => {
     const roles = ['manager', 'janitor', 'assistant', 'secretary']
     const validationChain = [
-        body('name').isString(),
+        body('name').isString().custom(value => {
+            if(value.length === 0) {
+                throw new Error('Name cannot be empty');    
+            }
+
+            if(!(/^[a-zA-Z\s]+$/.test(value))) {
+                throw new Error('Numbers are not allowed on name');
+            }
+
+            return true;
+        }),
         body('age').isNumeric().custom(value => {
             if(value < 0 || value > 130) {
                 throw new Error('age cannot be negative or bigger than 130');
@@ -33,7 +43,17 @@ export const validateUpdateUser = async (req: Request<any, any, any, any, any>, 
     const roles = ['manager', 'janitor', 'assistant', 'secretary']
     const validationChain = [
         param('id').isNumeric(),
-        body('name').isString(),
+        body('name').isString().custom(value => {
+            if(value.length === 0) {
+                throw new Error('Name cannot be empty');    
+            }
+
+            if(!(/^[a-zA-Z\s]+$/.test(value))) {
+                throw new Error('Numbers are not allowed on name');
+            }
+
+            return true;
+        }),
         body('age').isNumeric().custom(value => {
             if(value < 0 || value > 130) {
                 throw new Error('age cannot be negative or bigger than 130');

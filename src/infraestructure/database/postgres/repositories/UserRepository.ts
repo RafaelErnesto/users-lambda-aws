@@ -46,7 +46,9 @@ export class UserRepository implements UserRepositoryInterface {
             }
             const userToUpdate = resultQuery[0];
 
-            Object.assign(userToUpdate, data)
+            userToUpdate.name = data.name;
+            userToUpdate.age = data.age;
+            userToUpdate.role = data.role;
             return await repository.save(userToUpdate);
         }finally {
             if(connection) {
