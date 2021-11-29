@@ -17,4 +17,13 @@ Part of the tests needs a local postgres database to run, you can create one jus
 
 ## API endpoints
 
+Para criar um user:
 
+POST /api/user:
+
+payload: 
+`{
+  "name": "Test",
+  "age": 30,
+  "role": "manager"
+}`
