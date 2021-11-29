@@ -22,8 +22,9 @@ Para criar um user:
 POST /api/user:
 
 payload: 
-`{
+```javascript
+{
   "name": "Test",
   "age": 30,
   "role": "manager"
-}`
+}```
