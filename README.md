@@ -17,4 +17,49 @@ Part of the tests needs a local postgres database to run, you can create one jus
 
 ## API endpoints
 
+### Create a new user:
+
+**[POST] /api/user**
+
+payload: 
+```javascript
+{
+  "name": "Test",
+  "age": 30,
+  "role": "manager"
+}
+```
+
+### Update a user:
+
+**[PUT] /api/user/:id**
+
+```javascript
+{
+  "name": "Test",
+  "age": 30,
+  "role": "manager"
+}
+```
+
+### Get a user:
+
+**[GET] /api/user:id**
+
+
+### Delete a user:
+
+**[DELETE] /api/user:id**
+
+
+### Constraints:
+
+- Allowed roles are: manager, assistant, janitor or secretary.
+
+- To create a user or update , all fields are required.
+
+- Age must be between 0 and 130
+
+- Numbers are not allowed on name
+
 
