@@ -62,7 +62,5 @@ payload:
 
 - Numbers are not allowed on name
 
-## Demo:
- https://e01uccw495.execute-api.sa-east-1.amazonaws.com/dev/
 
 
